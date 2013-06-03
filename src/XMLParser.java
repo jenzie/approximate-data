@@ -15,10 +15,13 @@ import java.util.Scanner;
 
 public class XMLParser {
 	private static final String FILE_EXTENSION = ".xml";
+	private String XMLFile;
 	private Scanner input;
 	private XMLComponent root, current;
 
 	public XMLParser(String XMLFile) {
+		this.XMLFile = XMLFile;
+
 		try {
 			input = new Scanner(new File(XMLFile));
 		} catch (FileNotFoundException e) {
@@ -33,28 +36,23 @@ public class XMLParser {
 		int lineNumber = 1;
 
 		while(input.hasNext()) {
+			line = input.nextLine().split("<");
 
-
-			String inputLine = input.nextLine();
-			System.out.println(inputLine);
-
-
-
-			line = inputLine.split("<");
-
-
+			/**
 			int ind = 0;
 			System.out.println(lineNumber + "...");
 			for(String el : line) {
 				System.out.println(ind + ":" + el + ":");
 				ind++;
-			}
+			}*/
 
 
 			parseLine(line, lineNumber);
 			lineNumber++;
 		}
-		//System.out.println(root.getText());
+		parseSpecialLine("/unit>", lineNumber);
+		System.out.println("root: " + root.getText());
+		System.out.println("current: " + current.getText());
 	}
 
 	private void parseLine(String[] line, int lineNumber) {
@@ -68,7 +66,6 @@ public class XMLParser {
 
 		// store leading whitespace/characters from first element as leaf
 		newNode = new XMLLeaf(null, line[0], current);
-		//System.out.println(newNode.getText());
 
 		// for each tag after the leading whitespace/braces
 		for(int i = 1; i < line.length - 1; i++) {
@@ -90,21 +87,20 @@ public class XMLParser {
 
 			// check if opening tag
 			if(!(tempTag.charAt(1) == '/')) {
-				System.out.println("going through 1");
 				newNode = new XMLComposite(tempTag, tempText, current);
 
-				if(root == null)
+				// should never happen
+				if(root == null) {
+					System.err.println(
+						"Error: Root should never be null from here.");
 					root = newNode;
-				current = newNode;
+				} current = newNode;
 			}
 
 			// check if closing tag
 			else if(tempTag.charAt(1) == '/') {
-				System.out.println("going through 2");
 				if(current.getCloseTag().equals(tempTag)) {
-					System.out.println("going through 3");
 					if(!current.setClosed(tempTag)) {
-						System.out.println("going through 4");
 						System.err.println(
 							"Error: Invalid XML tag on line: " + lineNumber);
 						System.exit(0);
@@ -139,11 +135,15 @@ public class XMLParser {
 	private void parseSpecialLine(String tag, int lineNumber) {
 		XMLComponent newNode;
 
-		if(lineNumber == 0) {
+		if(lineNumber == 1) {
 			root = new XMLComposite("<" + tag, null, null);
 			root.setClosed("</" + tag);
 			current = root;
-		} else if(lineNumber == 1) {
+		} else if(lineNumber == 2) {
+			newNode = new XMLComposite("<" + tag, null, current);
+			newNode.setClosed("</" + tag);
+			current = newNode;
+		} else {
 			newNode = new XMLComposite("<" + tag, null, current);
 			newNode.setClosed("</" + tag);
 			current = newNode;
