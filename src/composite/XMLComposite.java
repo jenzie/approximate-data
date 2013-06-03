@@ -57,13 +57,7 @@ public class XMLComposite extends XMLComponent {
 	 * @return true if tag was able to be closed.
 	 */
 	public boolean setClosed(String givenCloseTag) {
-		if(this.isClosed())
-			return false; // tag was already closed
-		else if(super.closeTag.equals(givenCloseTag)) {
-			super.isClosed = true;
-			return true; // close this tag
-		}
-		return false; // givenCloseTag is invalid
+		return super.setClosed(givenCloseTag);
 	}
 
 	/**

@@ -61,6 +61,21 @@ public abstract class XMLComponent {
 	public abstract boolean isClosed();
 
 	/**
+	 * Sets the boolean value to true if tag was properly closed.
+	 *
+	 * @return true if tag was able to be closed.
+	 */
+	public boolean setClosed(String givenCloseTag) {
+		if(this.isClosed())
+			return false; // tag was already closed
+		else if(this.closeTag.equals(givenCloseTag)) {
+			this.isClosed = true;
+			return true; // close this tag
+		}
+		return false; // givenCloseTag is invalid
+	}
+
+	/**
 	 * @return textual representation of the node; output.
 	 */
 	public abstract String getText();

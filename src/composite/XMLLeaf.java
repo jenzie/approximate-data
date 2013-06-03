@@ -43,6 +43,15 @@ public class XMLLeaf extends XMLComponent {
 	}
 
 	/**
+	 * Sets the boolean value to true if tag was properly closed.
+	 *
+	 * @return true if tag was able to be closed; always false.
+	 */
+	public boolean setClosed(String givenCloseTag) {
+		return super.setClosed(givenCloseTag);
+	}
+
+	/**
 	 * Unable to add children to leaf nodes.
 	 *
 	 * @param node child node to add.
