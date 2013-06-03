@@ -52,6 +52,21 @@ public class XMLComposite extends XMLComponent {
 	}
 
 	/**
+	 * Sets the boolean value to true if tag was properly closed.
+	 *
+	 * @return true if tag was able to be closed.
+	 */
+	public boolean setClosed(String givenCloseTag) {
+		if(this.isClosed())
+			return false; // tag was already closed
+		else if(super.closeTag.equals(givenCloseTag)) {
+			super.isClosed = true;
+			return true; // close this tag
+		}
+		return false; // givenCloseTag is invalid
+	}
+
+	/**
 	 * Attempts to add a child to the parent node.
 	 *
 	 * @param child node to add to parent node in tree structure.
@@ -69,7 +84,8 @@ public class XMLComposite extends XMLComponent {
 		String result = this.getOpenTag() + super.text;
 		for(XMLComponent node : children)
 			result += node.getText();
-		result += this.getCloseTag();
+		if(this.isClosed())
+			result += this.getCloseTag();
 		return result;
 	}
 }
