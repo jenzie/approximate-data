@@ -24,7 +24,7 @@ public abstract class XMLComponent {
 	 * Constructor; closing tag is set based on tag from input.
 	 *
 	 * @param tag XML opening tag.
-	 * @param text text in the document that is not XML.
+	 * @param text text in the input file that is not XML.
 	 * @param parent parent of this node.
 	 */
 	public XMLComponent(String tag, String text, XMLComponent parent) {
