@@ -13,6 +13,7 @@ import java.util.Scanner;
  */
 
 public class XMLParser {
+	private static final String FILE_EXTENSION = ".xml";
 	private Scanner input;
 	private XMLComponent root, current;
 
@@ -20,7 +21,7 @@ public class XMLParser {
 		try {
 			input = new Scanner(new File(XMLFile));
 		} catch (FileNotFoundException e) {
-			System.err.println("Usage: java XMLParser.java INPUT_FILENAME");
+			System.err.println("Usage: java XMLParser.java FILENAME.xml");
 			System.exit(0);
 		}
 		run();
@@ -35,6 +36,7 @@ public class XMLParser {
 			parseLine(line, lineNumber);
 			lineNumber++;
 		}
+		System.out.println(root.getText());
 	}
 
 	private void parseLine(String[] line, int lineNumber) {
@@ -70,5 +72,20 @@ public class XMLParser {
 				}
 			} // end else-if
 		} // end for-loop
+	}
+
+	public static void main(String[] args) {
+		String fileExtension;
+
+		if(args.length != 0) {
+			fileExtension =
+				args[0].substring(args[0].
+						length() - FILE_EXTENSION.length() + 1);
+			if(fileExtension.equals(FILE_EXTENSION))
+				new XMLParser(args[0]);
+		} else {
+			System.err.println("Usage: java XMLParser.java FILENAME.xml");
+			System.exit(0);
+		}
 	}
 }
