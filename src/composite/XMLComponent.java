@@ -70,5 +70,5 @@ public abstract class XMLComponent {
 	 * @param child node to add to parent node in tree structure.
 	 * @return true if child was added successfully.
 	 */
-	public abstract boolean add(XMLComponent child);
+	public abstract boolean addChild(XMLComponent child);
 }
