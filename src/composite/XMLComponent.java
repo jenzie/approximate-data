@@ -10,7 +10,8 @@ import java.util.ArrayList;
  */
 
 /**
- * XMLComponent provides an interface that XML nodes may use or override if
+ * XMLComponent
+ * Provides an interface that XML nodes may use or override if
  * extending from this class (particularly, XML Composite and XMLLeaf).
  */
 public abstract class XMLComponent {
