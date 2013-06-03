@@ -33,15 +33,22 @@ public class XMLParser {
 		int lineNumber = 1;
 
 		while(input.hasNext()) {
-			line = input.nextLine().split("<");
 
-			/*
+
+			String inputLine = input.nextLine();
+			System.out.println(inputLine);
+
+
+
+			line = inputLine.split("<");
+
+
 			int ind = 0;
 			System.out.println(lineNumber + "...");
 			for(String el : line) {
 				System.out.println(ind + ":" + el + ":");
 				ind++;
-			}*/
+			}
 
 
 			parseLine(line, lineNumber);
@@ -57,13 +64,16 @@ public class XMLParser {
 
 		// store leading whitespace/characters from first element as leaf
 		newNode = new XMLLeaf(null, line[0], current);
-		System.out.println(newNode.getText());
+		//System.out.println(newNode.getText());
 
 		// for each tag after the leading whitespace/braces
 		for(int i = 1; i < line.length - 1; i++) {
-			// check if tag is empty
-			if(line[i].length() == 0)
+			// check if tag is empty; should never happen.
+			if(line[i].length() == 0) {
+				System.err.println(
+					"Error: Empty tag; this should never happen.");
 				continue;
+			}
 
 			// get the tag and information
 			tempPiece = line[i]; //.trim()
@@ -71,7 +81,7 @@ public class XMLParser {
 			tempTag = "<" + tempPiece.substring(0, tempIndex + 1);
 			tempText = tempPiece.substring(tempIndex + 1);
 
-			System.out.println(tempTag + lineNumber + "..." + i);
+			//System.out.println(tempTag + lineNumber + "..." + i);
 
 
 			// check if opening tag
