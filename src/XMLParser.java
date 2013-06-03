@@ -62,6 +62,10 @@ public class XMLParser {
 		int tempIndex; // end index
 		XMLComponent newNode;
 
+		// parsing the first 2 lines of an XML file for text declaration
+		if(lineNumber == 0 || lineNumber == 1)
+			parseSpecialLine(line[1], lineNumber);
+
 		// store leading whitespace/characters from first element as leaf
 		newNode = new XMLLeaf(null, line[0], current);
 		//System.out.println(newNode.getText());
@@ -86,6 +90,7 @@ public class XMLParser {
 
 			// check if opening tag
 			if(!(tempTag.charAt(1) == '/')) {
+				System.out.println("going through 1");
 				newNode = new XMLComposite(tempTag, tempText, current);
 
 				if(root == null)
@@ -95,8 +100,11 @@ public class XMLParser {
 
 			// check if closing tag
 			else if(tempTag.charAt(1) == '/') {
+				System.out.println("going through 2");
 				if(current.getCloseTag().equals(tempTag)) {
+					System.out.println("going through 3");
 					if(!current.setClosed(tempTag)) {
+						System.out.println("going through 4");
 						System.err.println(
 							"Error: Invalid XML tag on line: " + lineNumber);
 						System.exit(0);
@@ -126,5 +134,19 @@ public class XMLParser {
 		}
 
 		new XMLParser(args[0]);
+	}
+
+	private void parseSpecialLine(String tag, int lineNumber) {
+		XMLComponent newNode;
+
+		if(lineNumber == 0) {
+			root = new XMLComposite("<" + tag, null, null);
+			root.setClosed("</" + tag);
+			current = root;
+		} else if(lineNumber == 1) {
+			newNode = new XMLComposite("<" + tag, null, current);
+			newNode.setClosed("</" + tag);
+			current = newNode;
+		}
 	}
 }
