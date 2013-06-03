@@ -66,7 +66,7 @@ public class XMLComposite extends XMLComponent {
 	 * @return textual representation of the node; output.
 	 */
 	public String getText() {
-		String result = this.getOpenTag();
+		String result = this.getOpenTag() + super.text;
 		for(XMLComponent node : children)
 			result += node.getText();
 		result += this.getCloseTag();
