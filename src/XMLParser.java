@@ -33,6 +33,11 @@ public class XMLParser {
 
 		while(input.hasNext()) {
 			line = input.nextLine().split("<");
+
+			for(String part : line)
+				System.out.println(part);
+
+
 			parseLine(line, lineNumber);
 			lineNumber++;
 		}
@@ -76,16 +81,21 @@ public class XMLParser {
 
 	public static void main(String[] args) {
 		String fileExtension;
+		boolean status = false;
 
 		if(args.length != 0) {
 			fileExtension =
 				args[0].substring(args[0].
-						length() - FILE_EXTENSION.length() + 1);
+						length() - FILE_EXTENSION.length());
 			if(fileExtension.equals(FILE_EXTENSION))
-				new XMLParser(args[0]);
-		} else {
+				status = true;
+		}
+
+		if(!status) {
 			System.err.println("Usage: java XMLParser.java FILENAME.xml");
 			System.exit(0);
 		}
+		
+		new XMLParser(args[0]);
 	}
 }
