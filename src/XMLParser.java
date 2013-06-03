@@ -51,8 +51,9 @@ public class XMLParser {
 			lineNumber++;
 		}
 		parseSpecialLine("/unit>", lineNumber);
-		System.out.println("root: " + root.getText());
-		System.out.println("current: " + current.getText());
+		System.out.println(root.getText());
+		//System.out.println("root's child: " + root.children.get(0).getText());
+		//System.out.println("current: " + current.getText());
 	}
 
 	private void parseLine(String[] line, int lineNumber) {
@@ -61,11 +62,12 @@ public class XMLParser {
 		XMLComponent newNode;
 
 		// parsing the first 2 lines of an XML file for text declaration
-		if(lineNumber == 0 || lineNumber == 1)
+		if(lineNumber == 1 || lineNumber == 2)
 			parseSpecialLine(line[1], lineNumber);
 
 		// store leading whitespace/characters from first element as leaf
 		newNode = new XMLLeaf(null, line[0], current);
+		current.addChild(newNode);
 
 		// for each tag after the leading whitespace/braces
 		for(int i = 1; i < line.length - 1; i++) {
@@ -94,7 +96,10 @@ public class XMLParser {
 					System.err.println(
 						"Error: Root should never be null from here.");
 					root = newNode;
-				} current = newNode;
+				}
+
+				current.addChild(newNode);
+				current = newNode;
 			}
 
 			// check if closing tag
@@ -140,12 +145,14 @@ public class XMLParser {
 			root.setClosed("</" + tag);
 			current = root;
 		} else if(lineNumber == 2) {
-			newNode = new XMLComposite("<" + tag, null, current);
+			newNode = new XMLComposite("<" + tag, null, root);
 			newNode.setClosed("</" + tag);
+			current.addChild(newNode);
 			current = newNode;
 		} else {
 			newNode = new XMLComposite("<" + tag, null, current);
 			newNode.setClosed("</" + tag);
+			current.addChild(newNode);
 			current = newNode;
 		}
 	}

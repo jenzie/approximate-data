@@ -66,7 +66,11 @@ public class XMLLeaf extends XMLComponent {
 	 */
 	public String getText() {
 		if(this.getOpenTag() == null)
-			return super.text;
+			return " ";
+		if(super.text == null && this.getOpenTag() == null)
+			return " ";
+		if(super.text == null)
+			return this.getOpenTag();
 		return this.getOpenTag() + super.text;
 	}
 }

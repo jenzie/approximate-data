@@ -85,7 +85,7 @@ public class XMLComposite extends XMLComponent {
 		if(this.isClosed() &&
 				(this.getCloseTag().length() < 20 &&
 				!this.getCloseTag().equals("<//unit>")))
-			result += this.getCloseTag();
+			result += this.getCloseTag() + "\n";
 		return result;
 	}
 }
