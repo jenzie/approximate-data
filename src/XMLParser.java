@@ -1,5 +1,6 @@
 import composite.XMLComponent;
 import composite.XMLComposite;
+import composite.XMLLeaf;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -34,6 +35,15 @@ public class XMLParser {
 		while(input.hasNext()) {
 			line = input.nextLine().split("<");
 
+			/*
+			int ind = 0;
+			System.out.println(lineNumber + "...");
+			for(String el : line) {
+				System.out.println(ind + ":" + el + ":");
+				ind++;
+			}*/
+
+
 			parseLine(line, lineNumber);
 			lineNumber++;
 		}
@@ -45,7 +55,11 @@ public class XMLParser {
 		int tempIndex; // end index
 		XMLComponent newNode;
 
-		// for each tag
+		// store leading whitespace/characters from first element as leaf
+		newNode = new XMLLeaf(null, line[0], current);
+		System.out.println(newNode.getText());
+
+		// for each tag after the leading whitespace/braces
 		for(int i = 1; i < line.length - 1; i++) {
 			// check if tag is empty
 			if(line[i].length() == 0)

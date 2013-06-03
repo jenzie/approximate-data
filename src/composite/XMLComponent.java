@@ -29,7 +29,7 @@ public abstract class XMLComponent {
 	 */
 	public XMLComponent(String tag, String text, XMLComponent parent) {
 		this.openTag = tag;
-		this.closeTag = "</" + tag.substring(1, tag.length());
+		this.closeTag = tag;
 		this.isClosed = false;
 		this.text = text;
 		this.parent = parent;

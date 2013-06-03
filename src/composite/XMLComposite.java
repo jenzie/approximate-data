@@ -22,6 +22,7 @@ public class XMLComposite extends XMLComponent {
 	 */
 	public XMLComposite(String tag, String text, XMLComponent parent) {
 		super(tag, text, parent);
+		super.closeTag = "</" + tag.substring(1, tag.length());
 	}
 
 	/**
