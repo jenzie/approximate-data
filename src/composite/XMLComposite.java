@@ -48,7 +48,7 @@ public class XMLComposite extends XMLComponent {
 	 * @return true is tag was closed; false, otherwise.
 	 */
 	public boolean isClosed() {
-		return this.isClosed();
+		return this.isClosed;
 	}
 
 	/**

@@ -34,10 +34,6 @@ public class XMLParser {
 		while(input.hasNext()) {
 			line = input.nextLine().split("<");
 
-			for(String part : line)
-				System.out.println(part);
-
-
 			parseLine(line, lineNumber);
 			lineNumber++;
 		}
