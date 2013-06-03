@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * extending from this class (particularly, XML Composite and XMLLeaf).
  */
 public abstract class XMLComponent {
-	private String openTag, closeTag;
+	private String openTag, closeTag, text;
 	private boolean isClosed;
 	public XMLComponent parent;
 	public ArrayList<XMLComponent> children = new ArrayList<XMLComponent>();
@@ -24,12 +24,14 @@ public abstract class XMLComponent {
 	 * Constructor; closing tag is set based on tag from input.
 	 *
 	 * @param tag XML opening tag.
+	 * @param text text in the document that is not XML.
 	 * @param parent parent of this node.
 	 */
-	public XMLComponent(String tag, XMLComponent parent) {
+	public XMLComponent(String tag, String text, XMLComponent parent) {
 		this.openTag = tag;
 		this.closeTag = "</" + tag.substring(1, tag.length());
 		this.isClosed = false;
+		this.text = text;
 		this.parent = parent;
 	}
 

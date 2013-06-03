@@ -12,15 +12,16 @@ package composite;
  * XMLComposite
  * A XML node that may have children, and has both an opening and closing tag.
  */
-public class XMLComposite extends XMLComponent{
+public class XMLComposite extends XMLComponent {
 	/**
 	 * Constructor; closing tag is set based on tag from input.
 	 *
 	 * @param tag XML opening tag.
+	 * @param text text in the document that is not XML.
 	 * @param parent parent of this node.
 	 */
-	public XMLComposite(String tag, XMLComponent parent) {
-		super(tag, parent);
+	public XMLComposite(String tag, String text, XMLComponent parent) {
+		super(tag, text, parent);
 	}
 
 	/**

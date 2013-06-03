@@ -7,5 +7,13 @@ package composite;
  * project: approximate-data
  */
 
-public class XMLLeaf {
+/**
+ * XMLLead
+ * A XML node that cannot have children, and does not need a closing tag.
+ */
+public class XMLLeaf extends XMLComponent {
+	/**
+	 * Constructor.
+	 *
+	 */
 }
