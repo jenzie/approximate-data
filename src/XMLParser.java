@@ -37,7 +37,7 @@ public class XMLParser {
 			parseLine(line, lineNumber);
 			lineNumber++;
 		}
-		System.out.println(root.getText());
+		//System.out.println(root.getText());
 	}
 
 	private void parseLine(String[] line, int lineNumber) {
@@ -46,12 +46,19 @@ public class XMLParser {
 		XMLComponent newNode;
 
 		// for each tag
-		for(int i = 0; i < line.length - 1; i++) {
+		for(int i = 1; i < line.length - 1; i++) {
+			// check if tag is empty
+			if(line[i].length() == 0)
+				continue;
+
 			// get the tag and information
-			tempPiece = line[1];
+			tempPiece = line[i]; //.trim()
 			tempIndex = tempPiece.indexOf(">");
 			tempTag = "<" + tempPiece.substring(0, tempIndex + 1);
 			tempText = tempPiece.substring(tempIndex + 1);
+
+			System.out.println(tempTag + lineNumber + "..." + i);
+
 
 			// check if opening tag
 			if(!(tempTag.charAt(1) == '/')) {
@@ -70,8 +77,10 @@ public class XMLParser {
 							"Error: Invalid XML tag on line: " + lineNumber);
 						System.exit(0);
 					}
+					current = current.parent;
 				}
 			} // end else-if
+			//System.out.println(current.getText());
 		} // end for-loop
 	}
 
