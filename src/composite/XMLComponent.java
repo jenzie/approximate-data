@@ -15,8 +15,8 @@ import java.util.ArrayList;
  * extending from this class (particularly, XML Composite and XMLLeaf).
  */
 public abstract class XMLComponent {
-	private String openTag, closeTag, text;
-	private boolean isClosed;
+	protected String openTag, closeTag, text;
+	protected boolean isClosed;
 	public XMLComponent parent;
 	public ArrayList<XMLComponent> children = new ArrayList<XMLComponent>();
 
