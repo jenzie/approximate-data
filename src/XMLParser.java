@@ -95,7 +95,7 @@ public class XMLParser {
 			System.err.println("Usage: java XMLParser.java FILENAME.xml");
 			System.exit(0);
 		}
-		
+
 		new XMLParser(args[0]);
 	}
 }
