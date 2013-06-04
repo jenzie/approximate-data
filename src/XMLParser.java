@@ -8,6 +8,7 @@ import strategy.RandomStrategy;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 /**
@@ -21,6 +22,7 @@ public class XMLParser {
 	private static final String FILE_EXTENSION = ".xml";
 	private String XMLFile;
 	private Scanner input;
+	private PrintWriter out;
 	private XMLComponent root, current;
 
 	public XMLParser(String XMLFile) {
@@ -116,16 +118,25 @@ public class XMLParser {
 							"Error: Invalid XML tag on line: " + lineNumber);
 						System.exit(0);
 					}
+					System.out.println(current.isClosed());
 					current = current.parent;
 				}
 
 				// check if parent tags can be closed since current was closed
 				else if(current.isClosed()) {
-					tempNode = current.parent;
+					System.out.println("going 1");
+					tempNode = current;
+
+
+
+
+
 					while(tempNode.isClosed())
 						tempNode = tempNode.parent;
+					System.out.println("going 2");
 					if(!tempNode.isClosed() &&
 						tempNode.getCloseTag().equals(tempTag)) {
+						System.out.println("going 3");
 						if(!tempNode.setClosed(tempTag)) {
 							System.err.println(
 								"Error: Invalid XML tag on line: " + lineNumber);
@@ -200,5 +211,9 @@ public class XMLParser {
 
 		// perform strategy C
 		return "";
+	}
+
+	private void getOutFile() {
+
 	}
 }
