@@ -64,7 +64,7 @@ public class XMLParser {
 	private void parseLine(String[] line, int lineNumber) {
 		String tempPiece, tempTag, tempText;
 		int tempIndex; // end index
-		XMLComponent newNode;
+		XMLComponent newNode, tempNode;
 
 		// parsing the first 2 lines of an XML file for text declaration
 		if(lineNumber == 1 || lineNumber == 2)
@@ -109,6 +109,7 @@ public class XMLParser {
 
 			// check if closing tag
 			else if(tempTag.charAt(1) == '/') {
+				// check if current tag can be closed if it wasn't already closed
 				if(current.getCloseTag().equals(tempTag)) {
 					if(!current.setClosed(tempTag)) {
 						System.err.println(
@@ -116,6 +117,21 @@ public class XMLParser {
 						System.exit(0);
 					}
 					current = current.parent;
+				}
+
+				// check if parent tags can be closed since current was closed
+				else if(current.isClosed()) {
+					tempNode = current.parent;
+					while(tempNode.isClosed())
+						tempNode = tempNode.parent;
+					if(!tempNode.isClosed() &&
+						tempNode.getCloseTag().equals(tempTag)) {
+						if(!tempNode.setClosed(tempTag)) {
+							System.err.println(
+								"Error: Invalid XML tag on line: " + lineNumber);
+							System.exit(0);
+						}
+					}
 				}
 			} // end else-if
 			//System.out.println(current.printText());
