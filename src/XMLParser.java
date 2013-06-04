@@ -7,6 +7,8 @@ import strategy.NaiveStrategy;
 import strategy.RandomStrategy;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 /**
@@ -57,6 +59,7 @@ public class XMLParser {
 	private void run() {
 		String[] line;
 		int lineNumber = 1;
+		XMLComponent[] results;
 
 		while(input.hasNext()) {
 			line = input.nextLine().split("<");
@@ -74,8 +77,10 @@ public class XMLParser {
 			lineNumber++;
 		}
 		parseSpecialLine("/unit>", lineNumber);
-		performApproximation("double", "float");
-		getOutFile();
+		results = performApproximation("double", "float");
+		getOutFile(results[0]);
+		getOutFile(results[1]);
+		getOutFile(results[2]);
 	}
 
 	private void parseLine(String[] line, int lineNumber) {
@@ -180,10 +185,16 @@ public class XMLParser {
 		}
 	}
 
-	private void performApproximation(String find, String replace) {
+	/**
+	 * Context of the strategy design pattern.
+	 * @param find data type to find
+	 * @param replace data type to replace 'find'
+	 */
+	private XMLComponent[] performApproximation(String find, String replace) {
 		String resultA, resultB, resultC;
 		int countA, countB, countC;
 		XMLComponent rootA, rootB, rootC;
+		XMLComponent[] roots = new XMLComponent[3];
 
 		// create all strategy objects
 		ApproximationStrategy naive = new NaiveStrategy(); // Strategy A
@@ -195,17 +206,43 @@ public class XMLParser {
 		countA = naive.getCount();
 		resultA = "There were " + countA + " variables " +
 			"changed from " + find + " to " + replace + ".";
-		System.out.println(resultA);
-		System.out.println(rootA.printText());
+		System.out.println("Strategy A: " + resultA);
+		// System.out.println(rootA.printText());
 
 		// perform strategy B
+		rootB = random.approximate(this.root, find, replace);
+		countB = random.getCount();
+		resultB = "There were " + countB + " variables " +
+				"changed from " + find + " to " + replace + ".";
+		System.out.println("Strategy B: " + resultB);
+		//System.out.println(rootB.printText());
 
 		// perform strategy C
+		rootC = loop.approximate(this.root, find, replace);
+		countC = loop.getCount();
+		resultC = "There were " + countB + " variables " +
+				"changed from " + find + " to " + replace + ".";
+		System.out.println("Strategy C: " + resultC);
+		//System.out.println(rootC.printText());
+
+		// store new roots to return
+		roots[0] = rootA; roots[1] = rootB; roots[2] = rootC;
+		return roots;
 	}
 
-	private void getOutFile() {
+	/**
+	 * Get the file output .xml file.
+	 */
+	private void getOutFile(XMLComponent root) {
+		// produce unique file names
+		String filename =
+			XMLFile.substring(0, XMLFile.length() - FILE_EXTENSION.length());
+		SimpleDateFormat dateFormat =
+			new SimpleDateFormat("MMddHHmmss");
+		filename += "_" + dateFormat.format(new Date()) + FILE_EXTENSION;
+
 		try {
-			out = new PrintWriter(new FileWriter(new File("output", XMLFile)));
+			out = new PrintWriter(new FileWriter(new File("output", filename)));
 		} catch (IOException ioe) {
 			System.err.println("IOException: " +
 				"Could not create print writer for /results/" + XMLFile);
