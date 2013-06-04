@@ -1,6 +1,10 @@
 import composite.XMLComponent;
 import composite.XMLComposite;
 import composite.XMLLeaf;
+import strategy.ApproximationStrategy;
+import strategy.LoopStrategy;
+import strategy.NaiveStrategy;
+import strategy.RandomStrategy;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -51,9 +55,10 @@ public class XMLParser {
 			lineNumber++;
 		}
 		parseSpecialLine("/unit>", lineNumber);
-		System.out.println(root.printText());
+		//System.out.println(root.printText());
 		//System.out.println("root's child: " + root.children.get(0).printText());
 		//System.out.println("current: " + current.printText());
+		performApproximation("double", "float");
 	}
 
 	private void parseLine(String[] line, int lineNumber) {
@@ -155,5 +160,29 @@ public class XMLParser {
 			current.addChild(newNode);
 			current = newNode;
 		}
+	}
+
+	private String performApproximation(String find, String replace) {
+		String resultA, resultB, resultC;
+		int countA, countB, countC;
+		XMLComponent rootA, rootB, rootC;
+
+		// create all strategy objects
+		ApproximationStrategy naive = new NaiveStrategy(); // Strategy A
+		ApproximationStrategy random = new RandomStrategy(); // Strategy B
+		ApproximationStrategy loop = new LoopStrategy(); // Strategy B
+
+		// perform strategy A
+		rootA = naive.approximate(this.root, find, replace);
+		countA = naive.getCount();
+		resultA = "There were " + countA + " variables " +
+			"changed from " + find + " to " + replace + ".";
+		System.out.println(resultA);
+		System.out.println(rootA.printText());
+
+		// perform strategy B
+
+		// perform strategy C
+		return "";
 	}
 }

@@ -11,15 +11,15 @@ import composite.XMLComponent;
 
 public class NaiveStrategy implements ApproximationStrategy {
 	private int count;
-	private XMLComponent root;
 
+	@Override
 	public int getCount() {
 		return this.count;
 	}
 
+	@Override
 	public XMLComponent approximate(
 			XMLComponent root, String find, String replace) {
-		this.root = root;
 		XMLComponent pointer = root;
 		find = find.toLowerCase();
 		replace = replace.toLowerCase();
@@ -27,13 +27,15 @@ public class NaiveStrategy implements ApproximationStrategy {
 		if(pointer.parent == null)
 			this.count = 0;
 
-		if(pointer.getText().toLowerCase().equals(find)) {
-			pointer.setText(replace);
-			this.count++;
+		if(pointer.getText() != null) {
+			if(pointer.getText().toLowerCase().equals(find)) {
+				pointer.setText(replace);
+				this.count++;
+			}
 		}
 		for(XMLComponent child : pointer.children)
 			this.approximate(child, find, replace);
 
-		return this.root;
+		return root;
 	}
 }
