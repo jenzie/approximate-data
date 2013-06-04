@@ -1,5 +1,7 @@
 package strategy;
 
+import composite.XMLComponent;
+
 /**
  * @author: Jenny Zhen; jenny.zhen@rit.edu
  * date: 06.03.2013
@@ -7,5 +9,6 @@ package strategy;
  * project: approximate-data
  */
 
-public class NaiveStrategy {
+public class NaiveStrategy implements ApproximationStrategy {
+	
 }

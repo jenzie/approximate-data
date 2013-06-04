@@ -64,7 +64,7 @@ public class XMLLeaf extends XMLComponent {
 	/**
 	 * @return textual representation of the node; output.
 	 */
-	public String getText() {
+	public String printText() {
 		if(this.getOpenTag() == null)
 			return " ";
 		if(super.text == null && this.getOpenTag() == null)
@@ -72,5 +72,21 @@ public class XMLLeaf extends XMLComponent {
 		if(super.text == null)
 			return this.getOpenTag();
 		return this.getOpenTag() + super.text;
+	}
+
+	/**
+	 * @return the text associated with the node.
+	 */
+	public String getText() {
+		return super.getText();
+	}
+
+	/**
+	 * Sets the text associated with the node.
+	 *
+	 * @param replace the text to replace the original text.
+	 */
+	public void setText(String replace) {
+		super.setText(replace);
 	}
 }

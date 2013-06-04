@@ -51,9 +51,9 @@ public class XMLParser {
 			lineNumber++;
 		}
 		parseSpecialLine("/unit>", lineNumber);
-		System.out.println(root.getText());
-		//System.out.println("root's child: " + root.children.get(0).getText());
-		//System.out.println("current: " + current.getText());
+		System.out.println(root.printText());
+		//System.out.println("root's child: " + root.children.get(0).printText());
+		//System.out.println("current: " + current.printText());
 	}
 
 	private void parseLine(String[] line, int lineNumber) {
@@ -113,7 +113,7 @@ public class XMLParser {
 					current = current.parent;
 				}
 			} // end else-if
-			//System.out.println(current.getText());
+			//System.out.println(current.printText());
 		} // end for-loop
 	}
 

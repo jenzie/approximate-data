@@ -76,11 +76,6 @@ public abstract class XMLComponent {
 	}
 
 	/**
-	 * @return textual representation of the node; output.
-	 */
-	public abstract String getText();
-
-	/**
 	 * Attempts to add a child to this parent node, if and only if, the child
 	 * node is a valid XML tag. Otherwise, ignore attempt to add.
 	 *
@@ -88,4 +83,25 @@ public abstract class XMLComponent {
 	 * @return true if child was added successfully.
 	 */
 	public abstract boolean addChild(XMLComponent child);
+
+	/**
+	 * @return textual representation of the node; output.
+	 */
+	public abstract String printText();
+
+	/**
+	 * @return the text associated with the node.
+	 */
+	public String getText() {
+		return this.text;
+	}
+
+	/**
+	 * Sets the text associated with the node.
+	 *
+	 * @param replace the text to replace the original text.
+	 */
+	public void setText(String replace) {
+		this.text = replace;
+	}
 }

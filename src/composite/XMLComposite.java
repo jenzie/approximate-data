@@ -75,17 +75,33 @@ public class XMLComposite extends XMLComponent {
 	/**
 	 * @return textual representation of the node; output.
 	 */
-	public String getText() {
+	public String printText() {
 		String result = this.getOpenTag();
 
 		if(super.text != null)
 			result += super.text;
 		for(XMLComponent node : children)
-			result += node.getText();
+			result += node.printText();
 		if(this.isClosed() &&
 				(this.getCloseTag().length() < 20 &&
 				!this.getCloseTag().equals("<//unit>")))
 			result += this.getCloseTag() + "\n";
 		return result;
+	}
+
+	/**
+	 * @return the text associated with the node.
+	 */
+	public String getText() {
+		return super.getText();
+	}
+
+	/**
+	 * Sets the text associated with the node.
+	 *
+	 * @param replace the text to replace the original text.
+	 */
+	public void setText(String replace) {
+		super.setText(replace);
 	}
 }
