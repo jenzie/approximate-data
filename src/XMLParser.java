@@ -16,6 +16,10 @@ import java.util.Scanner;
  * date: 06.03.2013
  * language: Java
  * project: approximate-data
+ *
+ * TODO: Add rules for indentation.
+ * TODO: Fix bug for closing tags.
+ * TODO: Implement random and loop strategies.
  */
 
 public class XMLParser {
