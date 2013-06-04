@@ -17,7 +17,7 @@ public class LoopStrategy implements ApproximationStrategy {
 
 	@Override
 	public XMLComponent approximate(
-		XMLComponent root, String find, String replace) {
+			XMLComponent node, String find, String replace) {
 		return null;
 	}
 }

@@ -39,7 +39,7 @@ public class XMLLeaf extends XMLComponent {
 	 * @return always returns true.
 	 */
 	public boolean isClosed() {
-		return this.isClosed();
+		return this.isClosed;
 	}
 
 	/**

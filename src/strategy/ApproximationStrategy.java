@@ -13,5 +13,5 @@ public interface ApproximationStrategy {
 	public int getCount();
 
 	public XMLComponent approximate(
-			XMLComponent root, String find, String replace);
+			XMLComponent node, String find, String replace);
 }

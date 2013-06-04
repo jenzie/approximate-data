@@ -35,6 +35,25 @@ public class XMLParser {
 		run();
 	}
 
+	public static void main(String[] args) {
+		String fileExtension;
+		boolean status = false;
+
+		if(args.length != 0) {
+			fileExtension =
+				args[0].substring(args[0].length() - FILE_EXTENSION.length());
+			if(fileExtension.equals(FILE_EXTENSION))
+				status = true;
+		}
+
+		if(!status) {
+			System.err.println("Usage: java XMLParser.java FILENAME.xml");
+			System.exit(0);
+		}
+
+		new XMLParser(args[0]);
+	}
+
 	private void run() {
 		String[] line;
 		int lineNumber = 1;
@@ -55,9 +74,6 @@ public class XMLParser {
 			lineNumber++;
 		}
 		parseSpecialLine("/unit>", lineNumber);
-		//System.out.println(root.printText());
-		//System.out.println("root's child: "+root.children.get(0).printText());
-		//System.out.println("current: " + current.printText());
 		performApproximation("double", "float");
 		getOutFile();
 	}
@@ -129,6 +145,7 @@ public class XMLParser {
 					while(tempNode.isClosed())
 						tempNode = tempNode.parent;
 					System.out.println("going 2");
+
 					if(!tempNode.isClosed() &&
 						tempNode.getCloseTag().equals(tempTag)) {
 						System.out.println("going 3");
@@ -136,33 +153,12 @@ public class XMLParser {
 							System.err.println(
 								"Error: Invalid XML tag on line: " +lineNumber);
 							System.exit(0);
-						}
-					}
-				}
+						} // end if
+					} // end if
+				} // end else-if
 			} // end else-if
-			//System.out.println(current.printText());
 		} // end for-loop
-	}
-
-	public static void main(String[] args) {
-		String fileExtension;
-		boolean status = false;
-
-		if(args.length != 0) {
-			fileExtension =
-				args[0].substring(args[0].
-						length() - FILE_EXTENSION.length());
-			if(fileExtension.equals(FILE_EXTENSION))
-				status = true;
-		}
-
-		if(!status) {
-			System.err.println("Usage: java XMLParser.java FILENAME.xml");
-			System.exit(0);
-		}
-
-		new XMLParser(args[0]);
-	}
+	}// end function
 
 	private void parseSpecialLine(String tag, int lineNumber) {
 		XMLComponent newNode;
@@ -184,7 +180,7 @@ public class XMLParser {
 		}
 	}
 
-	private String performApproximation(String find, String replace) {
+	private void performApproximation(String find, String replace) {
 		String resultA, resultB, resultC;
 		int countA, countB, countC;
 		XMLComponent rootA, rootB, rootC;
@@ -205,7 +201,6 @@ public class XMLParser {
 		// perform strategy B
 
 		// perform strategy C
-		return "";
 	}
 
 	private void getOutFile() {

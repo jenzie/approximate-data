@@ -19,23 +19,22 @@ public class NaiveStrategy implements ApproximationStrategy {
 
 	@Override
 	public XMLComponent approximate(
-			XMLComponent root, String find, String replace) {
-		XMLComponent pointer = root;
+			XMLComponent node, String find, String replace) {
 		find = find.toLowerCase();
 		replace = replace.toLowerCase();
 
-		if(pointer.parent == null)
+		if(node.parent == null)
 			this.count = 0;
 
-		if(pointer.getText() != null) {
-			if(pointer.getText().toLowerCase().equals(find)) {
-				pointer.setText(replace);
+		if(node.getText() != null) {
+			if(node.getText().toLowerCase().equals(find)) {
+				node.setText(replace);
 				this.count++;
 			}
 		}
-		for(XMLComponent child : pointer.children)
+		for(XMLComponent child : node.children)
 			this.approximate(child, find, replace);
 
-		return root;
+		return node;
 	}
 }
