@@ -24,3 +24,13 @@ using floats.
 * Naive Strategy: All existing variables are replaced.
 * Random Strategy: A random k out of n variables are replaced.
 * Loop Strategy: Only variables inside loops are replaced.
+
+Testing
+=======
+Input XML files are provided in input/.  
+Output XML files are created in output/.    
+
+Run using:  
+
+    java XMLParser.java FILE_NAME.xml  
+where FILENAME.XML is from the input directory.
