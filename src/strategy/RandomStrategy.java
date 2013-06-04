@@ -18,6 +18,6 @@ public class RandomStrategy implements ApproximationStrategy {
 	@Override
 	public XMLComponent approximate(
 		XMLComponent node, String find, String replace) {
-		return null;
+		return node;
 	}
 }

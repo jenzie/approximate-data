@@ -25,7 +25,7 @@ public class XMLParser {
 	private PrintWriter out;
 	private XMLComponent root, current;
 
-	public XMLParser(String XMLFile) {
+	public XMLParser(String XMLFile) throws InterruptedException {
 		this.XMLFile = XMLFile;
 
 		try {
@@ -37,7 +37,7 @@ public class XMLParser {
 		run();
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		String fileExtension;
 		boolean status = false;
 
@@ -56,7 +56,7 @@ public class XMLParser {
 		new XMLParser(args[0]);
 	}
 
-	private void run() {
+	private void run() throws InterruptedException {
 		String[] line;
 		int lineNumber = 1;
 		XMLComponent[] results;
@@ -77,10 +77,19 @@ public class XMLParser {
 			lineNumber++;
 		}
 		parseSpecialLine("/unit>", lineNumber);
+
+		// get results, pausing between file writes
 		results = performApproximation("double", "float");
+
+		System.out.println("\nWriting results to output directory.");
+		Thread.sleep(1000);
 		getOutFile(results[0]);
+		Thread.sleep(1000);
 		getOutFile(results[1]);
+		Thread.sleep(1000);
 		getOutFile(results[2]);
+
+		System.out.println("Writing complete.");
 	}
 
 	private void parseLine(String[] line, int lineNumber) {
