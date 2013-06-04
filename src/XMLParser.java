@@ -56,7 +56,7 @@ public class XMLParser {
 		}
 		parseSpecialLine("/unit>", lineNumber);
 		//System.out.println(root.printText());
-		//System.out.println("root's child: " + root.children.get(0).printText());
+		//System.out.println("root's child: "+root.children.get(0).printText());
 		//System.out.println("current: " + current.printText());
 		performApproximation("double", "float");
 		getOutFile();
@@ -110,7 +110,7 @@ public class XMLParser {
 
 			// check if closing tag
 			else if(tempTag.charAt(1) == '/') {
-				// check if current tag can be closed if it wasn't already closed
+				// check if current tag can be closed if wasn't already closed
 				if(current.getCloseTag().equals(tempTag)) {
 					if(!current.setClosed(tempTag)) {
 						System.err.println(
@@ -138,7 +138,7 @@ public class XMLParser {
 						System.out.println("going 3");
 						if(!tempNode.setClosed(tempTag)) {
 							System.err.println(
-								"Error: Invalid XML tag on line: " + lineNumber);
+								"Error: Invalid XML tag on line: " +lineNumber);
 							System.exit(0);
 						}
 					}
