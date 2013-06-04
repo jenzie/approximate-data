@@ -138,7 +138,6 @@ public class XMLParser {
 							"Error: Invalid XML tag on line: " + lineNumber);
 						System.exit(0);
 					}
-					System.out.println(current.isClosed());
 					current = current.parent;
 				}
 
