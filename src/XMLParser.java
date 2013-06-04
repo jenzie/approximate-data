@@ -126,10 +126,6 @@ public class XMLParser {
 					System.out.println("going 1");
 					tempNode = current;
 
-
-
-
-
 					while(tempNode.isClosed())
 						tempNode = tempNode.parent;
 					System.out.println("going 2");
