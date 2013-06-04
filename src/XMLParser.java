@@ -80,8 +80,8 @@ public class XMLParser {
 
 		// get results, pausing between file writes
 		results = performApproximation("double", "float");
-
 		System.out.println("\nWriting results to output directory.");
+
 		Thread.sleep(1000);
 		getOutFile(results[0]);
 		Thread.sleep(1000);
