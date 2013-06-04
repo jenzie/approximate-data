@@ -6,9 +6,7 @@ import strategy.LoopStrategy;
 import strategy.NaiveStrategy;
 import strategy.RandomStrategy;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.Scanner;
 
 /**
@@ -29,7 +27,7 @@ public class XMLParser {
 		this.XMLFile = XMLFile;
 
 		try {
-			input = new Scanner(new File(XMLFile));
+			input = new Scanner(new File("input", XMLFile)); // directory, file
 		} catch (FileNotFoundException e) {
 			System.err.println("Usage: java XMLParser.java FILENAME.xml");
 			System.exit(0);
@@ -61,6 +59,7 @@ public class XMLParser {
 		//System.out.println("root's child: " + root.children.get(0).printText());
 		//System.out.println("current: " + current.printText());
 		performApproximation("double", "float");
+		getOutFile();
 	}
 
 	private void parseLine(String[] line, int lineNumber) {
@@ -214,6 +213,14 @@ public class XMLParser {
 	}
 
 	private void getOutFile() {
-
+		try {
+			out = new PrintWriter(new FileWriter(new File("output", XMLFile)));
+		} catch (IOException ioe) {
+			System.err.println("IOException: " +
+				"Could not create print writer for /results/" + XMLFile);
+		}
+		out.write(root.printText());
+		out.flush();
+		out.close();
 	}
 }
