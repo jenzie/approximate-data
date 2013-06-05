@@ -263,6 +263,7 @@ public class XMLParser {
 			System.err.println("IOException: " +
 				"Could not create print writer for /results/" + XMLFile);
 		}
+		out.flush();
 		out.write(root.printText());
 		out.flush();
 		out.close();
