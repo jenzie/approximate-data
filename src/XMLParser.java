@@ -89,9 +89,9 @@ public class XMLParser {
 		Thread.sleep(1000);
 		getOutFile(results[0]);
 		Thread.sleep(1000);
-		getOutFile(results[1]);
+		//getOutFile(results[1]);
 		Thread.sleep(1000);
-		getOutFile(results[2]);
+		//getOutFile(results[2]);
 
 		System.out.println("Writing complete.");
 	}

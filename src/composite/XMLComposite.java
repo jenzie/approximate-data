@@ -86,7 +86,14 @@ public class XMLComposite extends XMLComponent {
 		if(this.isClosed() &&
 				(this.getCloseTag().length() < 20 &&
 				!this.getCloseTag().equals("<//unit>")))
-			result += this.getCloseTag() + "\n";
+
+			//System.out.println(this.getOpenTag());
+			// print exceptions for closing tags
+			if(this.getOpenTag().trim().equals("<comment type=\"block\">"))
+				result += "</comment>\n";
+			else
+				result += this.getCloseTag() + "\n";
+
 		return result;
 	}
 
