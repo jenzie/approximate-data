@@ -110,7 +110,7 @@ public class XMLParser {
 		current.addChild(newNode);
 
 		// for each tag after the leading whitespace/braces
-		for(int i = 1; i < line.length - 1; i++) {
+		for(int i = 1; i < line.length; i++) {
 			// check if tag is empty; should never happen.
 			if(line[i].length() == 0) {
 				System.err.println(
@@ -145,6 +145,10 @@ public class XMLParser {
 			// check if closing tag
 			else if(tempTag.charAt(1) == '/') {
 				// check if current tag can be closed if wasn't already closed
+
+				if(tempTag.equals("</comment>"))
+					tempTag = "</comment type=\"block\">";
+
 				if(current.getCloseTag().equals(tempTag)) {
 					if(!current.setClosed(tempTag)) {
 						System.err.println(

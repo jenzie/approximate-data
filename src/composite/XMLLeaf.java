@@ -65,6 +65,7 @@ public class XMLLeaf extends XMLComponent {
 	 * @return textual representation of the node; output.
 	 */
 	public String printText() {
+		System.out.println("leaf tag: " + this.openTag + " closed: " + this.isClosed());
 		if(this.getOpenTag() == null)
 			return " ";
 		if(super.text == null && this.getOpenTag() == null)

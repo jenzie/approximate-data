@@ -19,6 +19,7 @@ public abstract class XMLComponent {
 	protected boolean isClosed;
 	public XMLComponent parent;
 	public ArrayList<XMLComponent> children = new ArrayList<XMLComponent>();
+	protected ArrayList<String> exceptions = new ArrayList<String>();
 
 	/**
 	 * Constructor; closing tag is set based on tag from input.
@@ -68,7 +69,9 @@ public abstract class XMLComponent {
 	public boolean setClosed(String givenCloseTag) {
 		if(this.isClosed())
 			return false; // tag was already closed
-		else if(this.closeTag.equals(givenCloseTag)) {
+		else if(this.closeTag.equals(givenCloseTag) ||
+				this.exceptions.contains(givenCloseTag)) {
+			System.out.println("exc: " + givenCloseTag);
 			this.isClosed = true;
 			return true; // close this tag
 		}

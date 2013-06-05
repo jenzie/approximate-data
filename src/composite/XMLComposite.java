@@ -76,6 +76,7 @@ public class XMLComposite extends XMLComponent {
 	 * @return textual representation of the node; output.
 	 */
 	public String printText() {
+		System.out.println("leaf tag: " + this.openTag + " closed: " + this.isClosed());
 		String result = this.getOpenTag();
 
 		if(super.text != null)
