@@ -76,6 +76,7 @@ public class XMLComposite extends XMLComponent {
 	 * @return textual representation of the node; output.
 	 */
 	public String printText() {
+		//System.out.println("comp tag: " + this.openTag + " closed: " + this.isClosed());
 		String result = this.getOpenTag();
 
 		if(super.text != null)
@@ -84,16 +85,16 @@ public class XMLComposite extends XMLComponent {
 			result += node.printText();
 		if(this.isClosed() &&
 				(this.getCloseTag().length() < 20 &&
-				!this.getCloseTag().equals("<//unit>")))
+				!this.getCloseTag().equals("<//unit>"))) {
 
 			System.out.flush(); // okay
 			// print exceptions for closing tags
 			if(getOpenTag().equals("<comment type=\"block\">"))
-				result += "</comment>\n";
+				result += "</comment>";
 			else
-				result += this.getCloseTag() + "\n";
-
-		return result;
+				result += this.getCloseTag();
+		}
+		return result + "\r\n";
 	}
 
 	/**

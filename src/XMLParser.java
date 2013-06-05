@@ -102,12 +102,14 @@ public class XMLParser {
 		XMLComponent newNode, tempNode;
 
 		// parsing the first 2 lines of an XML file for text declaration
-		if(lineNumber == 1 || lineNumber == 2)
-			parseSpecialLine(line[1], lineNumber);
+		//if(lineNumber == 1 || lineNumber == 2)
+		//	parseSpecialLine(line[1], lineNumber);
 
 		// store leading whitespace/characters from first element as leaf
-		newNode = new XMLLeaf(null, line[0], current);
-		current.addChild(newNode);
+		if(lineNumber > 2) {
+			newNode = new XMLLeaf(null, line[0], current);
+			current.addChild(newNode);
+		}
 
 		// for each tag after the leading whitespace/braces
 		for(int i = 1; i < line.length; i++) {
@@ -137,8 +139,8 @@ public class XMLParser {
 						"Error: Root should never be null from here.");
 					root = newNode;
 				}
-
-				current.addChild(newNode);
+				else
+					current.addChild(newNode);
 				current = newNode;
 			}
 
@@ -264,6 +266,7 @@ public class XMLParser {
 				"Could not create print writer for /results/" + XMLFile);
 		}
 		out.flush();
+		System.out.println(root.printText());
 		out.write(root.printText());
 		out.flush();
 		out.close();
