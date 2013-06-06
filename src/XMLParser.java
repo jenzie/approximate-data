@@ -100,6 +100,7 @@ public class XMLParser {
 		String tempPiece, tempTag, tempText;
 		int tempIndex; // end index
 		XMLComponent newNode, tempNode;
+		String[] closeTags;
 
 		// parsing the first 2 lines of an XML file for text declaration
 		//if(lineNumber == 1 || lineNumber == 2)
@@ -117,6 +118,15 @@ public class XMLParser {
 			if(line[i].length() == 0) {
 				System.err.println(
 					"Error: Empty tag; this should never happen.");
+				continue;
+			}
+
+			System.out.println("." + line[i] + ".");
+
+			// store plain text as leaf nodes
+			if(!line[i].contains(">")) {
+				System.out.println("exc");
+				newNode = new XMLLeaf(null, line[i], current);
 				continue;
 			}
 
@@ -146,30 +156,35 @@ public class XMLParser {
 
 			// check if closing tag
 			else if(tempTag.charAt(1) == '/') {
+				// split to check if there is text in between the closing tags
+				closeTags = tempTag.split(">");
+				tempTag = closeTags[0] + ">";
+
 				// check if current tag can be closed if wasn't already closed
 
 				if(tempTag.equals("</comment>"))
 					tempTag = "</comment type=\"block\">";
 
-				if(current.getCloseTag().equals(tempTag)) {
-					if(!current.setClosed(tempTag)) {
+				tempNode = current;
+				while(tempNode.isClosed())
+					tempNode = tempNode.parent;
+
+				if(tempNode.getCloseTag().equals(tempTag)) {
+					if(!tempNode.setClosed(tempTag)) {
 						System.err.println(
 							"Error: Invalid XML tag on line: " + lineNumber);
 						System.exit(0);
 					}
-					current = current.parent;
+					current = tempNode.parent;
 				}
 
 				// check if parent tags can be closed since current was closed
-				else if(current.isClosed()) {
-					System.out.println("going 1");
-					tempNode = current;
-
-					while(tempNode.isClosed())
+				else {
+					tempNode = tempNode.parent;
+					while(tempNode != null && !tempNode.isClosed() &&
+							!tempNode.getCloseTag().equals(tempTag))
 						tempNode = tempNode.parent;
-					System.out.println("going 2");
-
-					if(!tempNode.isClosed() &&
+					if(tempNode != null && !tempNode.isClosed() &&
 						tempNode.getCloseTag().equals(tempTag)) {
 						System.out.println("going 3");
 						if(!tempNode.setClosed(tempTag)) {
@@ -178,7 +193,12 @@ public class XMLParser {
 							System.exit(0);
 						} // end if
 					} // end if
-				} // end else-if
+				} // end else-
+
+				if(closeTags.length == 2 && closeTags[1] != null) {
+					newNode = new XMLLeaf(null, closeTags[1], current);
+					tempNode.addChild(newNode);
+				}
 			} // end else-if
 		} // end for-loop
 	}// end function
@@ -266,7 +286,7 @@ public class XMLParser {
 				"Could not create print writer for /results/" + XMLFile);
 		}
 		out.flush();
-		System.out.println(root.printText());
+		//System.out.println(root.printText());
 		out.write(root.printText());
 		out.flush();
 		out.close();
