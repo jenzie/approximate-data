@@ -85,16 +85,21 @@ public class XMLComposite extends XMLComponent {
 			for(XMLComponent node : children)
 				result += node.printText();
 		}
+
+		System.out.println("start." + this.getOpenTag() + this.isClosed());
 		if(this.isClosed() &&
-				(this.getCloseTag().length() < 20 &&
+				(this.getCloseTag().length() < 25 &&
 				!this.getCloseTag().equals("<//unit>"))) {
 
-			System.out.flush(); // okay
+			System.out.println("oh, fuck you." + getOpenTag()); // okay
 			// print exceptions for closing tags
-			if(getOpenTag().equals("<comment type=\"block\">"))
+			if(this.getOpenTag().equals("<comment type=\"block\">")) {
 				result += "</comment>";
-			else
+				System.out.println("double fuck you.");
+			} else {
+				System.out.println(this.getOpenTag() + "." + this.getCloseTag());
 				result += this.getCloseTag();
+			}
 		}
 		if(this.children.size() == 1)
 			result += this.children.get(0).printText();

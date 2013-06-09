@@ -158,9 +158,10 @@ public class XMLParser {
 			else if(tempTag.charAt(1) == '/') {
 				// check if current tag can be closed if wasn't already closed
 
-				if(tempTag.equals("</comment>"))
+				if(tempTag.equals("</comment>")) {
 					tempTag = "</comment type=\"block\">";
-
+					System.out.println("fucking me over");
+				}
 				tempNode = current;
 				while(tempNode.isClosed())
 					tempNode = tempNode.parent;
