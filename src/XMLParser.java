@@ -156,10 +156,6 @@ public class XMLParser {
 
 			// check if closing tag
 			else if(tempTag.charAt(1) == '/') {
-				// split to check if there is text in between the closing tags
-				closeTags = tempTag.split(">");
-				tempTag = closeTags[0] + ">";
-
 				// check if current tag can be closed if wasn't already closed
 
 				if(tempTag.equals("</comment>"))
@@ -195,8 +191,8 @@ public class XMLParser {
 					} // end if
 				} // end else-
 
-				if(closeTags.length == 2 && closeTags[1] != null) {
-					newNode = new XMLLeaf(null, closeTags[1], current);
+				if(tempText != null && tempNode != null) {
+					newNode = new XMLLeaf(null, tempText, current);
 					tempNode.addChild(newNode);
 				}
 			} // end else-if

@@ -66,10 +66,10 @@ public class XMLLeaf extends XMLComponent {
 	 */
 	public String printText() {
 		//System.out.println("leaf tag: " + this.openTag + " closed: " + this.isClosed());
-		if(this.getOpenTag() == null)
-			return "\t";
-		if(super.text == null && this.getOpenTag() == null)
-			return "\t";
+		if(this.getOpenTag() == null && super.text == null)
+			return "";
+		if(this.getOpenTag() == null && super.text != null)
+			return super.text;
 		if(super.text == null)
 			return this.getOpenTag() + "\r\n";
 		return this.getOpenTag() + super.text + "\r\n";

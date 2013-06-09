@@ -81,8 +81,10 @@ public class XMLComposite extends XMLComponent {
 
 		if(super.text != null)
 			result += super.text;
-		for(XMLComponent node : children)
-			result += node.printText();
+		if(this.children.size() > 1) {
+			for(XMLComponent node : children)
+				result += node.printText();
+		}
 		if(this.isClosed() &&
 				(this.getCloseTag().length() < 20 &&
 				!this.getCloseTag().equals("<//unit>"))) {
@@ -94,6 +96,9 @@ public class XMLComposite extends XMLComponent {
 			else
 				result += this.getCloseTag();
 		}
+		if(this.children.size() == 1)
+			result += this.children.get(0).printText();
+
 		return result + "\r\n";
 	}
 
